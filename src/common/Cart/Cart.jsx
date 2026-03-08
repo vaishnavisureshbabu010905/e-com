@@ -1,72 +1,126 @@
 import React from "react"
 import "./style.css"
 
-const Cart = ({ CartItem, addToCart, decreaseQty }) => {
-  // Stpe: 7   calucate total of items
-  const totalPrice = CartItem.reduce((price, item) => price + item.qty * item.price, 0)
+const Cart = ({ cartItems, addToCart, decreaseQty, removeItem, clearCart }) => {
 
-  // prodcut qty total
+  const totalPrice = cartItems.reduce((price, item) => price + item.qty * item.price, 0)
+
   return (
-    <>
-      <section className='cart-items'>
-        <div className='container d_flex'>
-          {/* if hamro cart ma kunai pani item xaina bhane no diplay */}
 
-          <div className='cart-details'>
-            {CartItem.length === 0 && <h1 className='no-items product'>No Items are add in Cart</h1>}
+    <section className="cart-items">
 
-            {/* yasma hami le cart item lai display garaaxa */}
-            {CartItem.map((item) => {
-              const productQty = item.price * item.qty
+      <div className="container d_flex">
 
-              return (
-                <div className='cart-list product d_flex' key={item.id}>
-                  <div className='img'>
-                    <img src={item.cover} alt='' />
-                  </div>
-                  <div className='cart-details'>
-                    <h3>{item.name}</h3>
-                    <h4>
-                      ${item.price}.00 * {item.qty}
-                      <span>${productQty}.00</span>
-                    </h4>
-                  </div>
-                  <div className='cart-items-function'>
-                    <div className='removeCart'>
-                      <button className='removeCart'>
-                        <i className='fa-solid fa-xmark'></i>
-                      </button>
-                    </div>
-                    {/* stpe: 5 
-                    product ko qty lai inc ra des garne
-                    */}
-                    <div className='cartControl d_flex'>
-                      <button className='incCart' onClick={() => addToCart(item)}>
-                        <i className='fa-solid fa-plus'></i>
-                      </button>
-                      <button className='desCart' onClick={() => decreaseQty(item)}>
-                        <i className='fa-solid fa-minus'></i>
-                      </button>
-                    </div>
-                  </div>
+        <div className="cart-details">
 
-                  <div className='cart-item-price'></div>
+          {cartItems.length === 0 && <h1 className="no-items product">No Items in Cart</h1>}
+
+          {cartItems.map((item) => {
+
+            const productQty = item.price * item.qty
+
+            return (
+
+              <div className="cart-list product d_flex" key={item.id}>
+
+                <div className="img">
+
+                  <img src={item.cover} alt="" />
+
                 </div>
-              )
-            })}
-          </div>
 
-          <div className='cart-total product'>
-            <h2>Cart Summary</h2>
-            <div className=' d_flex'>
-              <h4>Total Price :</h4>
-              <h3>${totalPrice}.00</h3>
-            </div>
-          </div>
+                <div className="cart-details">
+
+                  <h3>{item.name}</h3>
+
+                  <h4>
+
+                    ${item.price}.00 * {item.qty}
+
+                    <span>${productQty}.00</span>
+
+                  </h4>
+
+                </div>
+
+                <div className="cart-items-function">
+
+                  <div className="removeCart">
+
+                    <button className="removeCart" onClick={() => removeItem(item)}>
+
+                      <i className="fa-solid fa-xmark"></i>
+
+                    </button>
+
+                  </div>
+
+                  <div className="cartControl d_flex">
+
+                    <button className="incCart" onClick={() => addToCart(item)}>
+
+                      <i className="fa-solid fa-plus"></i>
+
+                    </button>
+
+                    <span className="qty">{item.qty}</span>
+
+                    <button className="desCart" onClick={() => decreaseQty(item)}>
+
+                      <i className="fa-solid fa-minus"></i>
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+                <div className="cart-item-price"></div>
+
+              </div>
+
+            )
+
+          })}
+
         </div>
-      </section>
-    </>
+
+
+        <div className="cart-total product">
+          <h2>Cart Summary</h2>
+          <div className="d_flex">
+            <h4>Total Price :</h4>
+            <h3>${totalPrice}.00</h3>
+          </div>
+          <button className="checkout-btn" onClick={() => {
+            if (cartItems.length > 0) {
+              const orderId = Date.now().toString();
+              const order = {
+                id: orderId,
+                items: cartItems,
+                total: totalPrice,
+                date: new Date().toISOString(),
+                status: 'Delivered'
+              };
+              const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+              existingOrders.push(order);
+              localStorage.setItem('orders', JSON.stringify(existingOrders));
+              // Clear cart
+              clearCart();
+              localStorage.setItem('cartItems', JSON.stringify([]));
+              window.location.href='/payment';
+            }
+          }}>
+            Proceed to Checkout
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
   )
+
 }
 
 export default Cart

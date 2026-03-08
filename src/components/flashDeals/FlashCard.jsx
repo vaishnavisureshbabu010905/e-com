@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
@@ -24,10 +24,18 @@ const SamplePrevArrow = (props) => {
   )
 }
 const FlashCard = ({ productItems, addToCart }) => {
-  const [count, setCount] = useState(0)
-  const increment = () => {
-    setCount(count + 1)
-  }
+  const [likeCounts, setLikeCounts] = useState(() => {
+    const stored = localStorage.getItem("likeCounts");
+    return stored ? JSON.parse(stored) : {};
+  });
+
+  useEffect(() => {
+    localStorage.setItem("likeCounts", JSON.stringify(likeCounts));
+  }, [likeCounts]);
+
+  const increment = (id) => {
+    setLikeCounts((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+  } 
   const settings = {
     dots: false,
     infinite: true,
@@ -41,20 +49,20 @@ const FlashCard = ({ productItems, addToCart }) => {
   return (
     <>
       <Slider {...settings}>
-        {productItems.map((productItems) => {
+        {productItems.map((product) => {
           return (
-            <div className='box'>
+            <div className='box' key={product.id}>
               <div className='product mtop'>
                 <div className='img'>
-                  <span className='discount'>{productItems.discount}% Off</span>
-                  <img src={productItems.cover} alt='' />
+                  <span className='discount'>{product.discount}% Off</span>
+                  <img src={product.cover} alt='' />
                   <div className='product-like'>
-                    <label>{count}</label> <br />
-                    <i className='fa-regular fa-heart' onClick={increment}></i>
+                    <label>{likeCounts[product.id] || 0}</label> <br />
+                    <i className='fa-regular fa-heart' onClick={() => { increment(product.id); addToCart(product); }}></i>
                   </div>
                 </div>
                 <div className='product-details'>
-                  <h3>{productItems.name}</h3>
+                  <h3>{product.name}</h3>
                   <div className='rate'>
                     <i className='fa fa-star'></i>
                     <i className='fa fa-star'></i>
@@ -63,11 +71,8 @@ const FlashCard = ({ productItems, addToCart }) => {
                     <i className='fa fa-star'></i>
                   </div>
                   <div className='price'>
-                    <h4>${productItems.price}.00 </h4>
-                    {/* step : 3  
-                     if hami le button ma click garryo bahne 
-                    */}
-                    <button onClick={() => addToCart(productItems)}>
+                    <h4>${product.price}.00 </h4>
+                    <button onClick={() => addToCart(product)}>
                       <i className='fa fa-plus'></i>
                     </button>
                   </div>

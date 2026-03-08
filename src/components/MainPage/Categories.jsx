@@ -1,49 +1,55 @@
 import React from "react"
+import { useHistory } from "react-router-dom"
 
 const Categories = () => {
+  const history = useHistory();
   const data = [
     {
-      cateImg: "./images/category/cat1.png",
+      cateImg: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=100",
+      cateName: "All",
+    },
+    {
+      cateImg: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=100",
       cateName: "Fashion",
     },
     {
-      cateImg: "./images/category/cat2.png",
-      cateName: "Electronic",
+      cateImg: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=100",
+      cateName: "Electronics",
     },
     {
-      cateImg: "./images/category/cat3.png",
+      cateImg: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=100",
       cateName: "Cars",
     },
     {
-      cateImg: "./images/category/cat4.png",
+      cateImg: "https://images.unsplash.com/photo-1464983953574-0892a716854b?w=100",
       cateName: "Home & Garden",
     },
     {
-      cateImg: "./images/category/cat5.png",
+      cateImg: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=100",
       cateName: "Gifts",
     },
     {
-      cateImg: "./images/category/cat6.png",
+      cateImg: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100",
       cateName: "Music",
     },
     {
-      cateImg: "./images/category/cat7.png",
+      cateImg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=100",
       cateName: "Health & Beauty",
     },
     {
-      cateImg: "./images/category/cat8.png",
+      cateImg: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=100",
       cateName: "Pets",
     },
     {
-      cateImg: "./images/category/cat9.png",
+      cateImg: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=100",
       cateName: "Baby Toys",
     },
     {
-      cateImg: "./images/category/cat10.png",
+      cateImg: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=100",
       cateName: "Groceries",
     },
     {
-      cateImg: "./images/category/cat11.png",
+      cateImg: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=100",
       cateName: "Books",
     },
   ]
@@ -52,16 +58,22 @@ const Categories = () => {
     <>
       <div className='category'>
         {data.map((value, index) => {
+          const categoryParam = value.cateName.toLowerCase().replace(/ & | /g, "-");
           return (
-            <div className='box f_flex' key={index}>
+            <button
+              className='box f_flex'
+              key={index}
+              onClick={() => history.push(categoryParam === "all" ? "/" : `/${categoryParam}`)}
+              style={{ border: 'none', background: 'none', cursor: 'pointer' }}
+            >
               <img src={value.cateImg} alt='' />
               <span>{value.cateName}</span>
-            </div>
-          )
+            </button>
+          );
         })}
       </div>
     </>
-  )
+  );
 }
 
 export default Categories

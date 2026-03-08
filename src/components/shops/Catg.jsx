@@ -3,27 +3,27 @@ import React from "react"
 const Catg = () => {
   const data = [
     {
-      cateImg: "./images/category/cat-1.png",
+      cateImg: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=80",
       cateName: "Apple",
     },
     {
-      cateImg: "./images/category/cat-2.png",
-      cateName: "Samasung",
+      cateImg: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=80",
+      cateName: "Samsung",
     },
     {
-      cateImg: "./images/category/cat-1.png",
+      cateImg: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=80",
       cateName: "Oppo",
     },
     {
-      cateImg: "./images/category/cat-2.png",
+      cateImg: "https://images.unsplash.com/photo-1503602642458-232111445657?w=80",
       cateName: "Vivo",
     },
     {
-      cateImg: "./images/category/cat-1.png",
-      cateName: "Redimi",
+      cateImg: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80",
+      cateName: "Redmi",
     },
     {
-      cateImg: "./images/category/cat-2.png",
+      cateImg: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=80",
       cateName: "Sony",
     },
   ]

@@ -5,7 +5,9 @@ const Search = ({ CartItem }) => {
   // fixed Header
   window.addEventListener("scroll", function () {
     const search = document.querySelector(".search")
-    search.classList.toggle("active", window.scrollY > 100)
+    if (search) {
+      search.classList.toggle("active", window.scrollY > 100)
+    }
   })
 
   return (
@@ -13,7 +15,7 @@ const Search = ({ CartItem }) => {
       <section className='search'>
         <div className='container c_flex'>
           <div className='logo width '>
-            <a href="/" className="logomar">marShop</a> 
+            <a href="/" className="logomar">p2p marketplace</a> 
           </div>
 
           <div className='search-box f_flex'>
