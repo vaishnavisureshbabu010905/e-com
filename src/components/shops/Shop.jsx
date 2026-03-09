@@ -6,7 +6,7 @@ import "./style.css"
 
 
 
-const Shop = ({ addToCart, category: propCategory }) => {
+const Shop = ({ addToCart, category: propCategory, searchQuery }) => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   // Always get category from URL
@@ -15,10 +15,15 @@ const Shop = ({ addToCart, category: propCategory }) => {
 
   const filteredProducts =
     category === "all"
-      ? Data.productItems
+      ? Data.productItems.filter(item =>
+          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.category.toLowerCase().includes(searchQuery.toLowerCase())
+        )
       : Data.productItems.filter((item) =>
           item.category &&
-          item.category.toLowerCase() === category
+          item.category.toLowerCase() === category &&
+          (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+           item.category.toLowerCase().includes(searchQuery.toLowerCase()))
         );
 
   // Category menu buttons should navigate to the correct URL

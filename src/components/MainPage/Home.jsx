@@ -9,9 +9,16 @@ import Annocument from "../annocument/Annocument"
 import Wrapper from "../wrapper/Wrapper"
 import Data from "../Data"
 
-const Home = ({ addToCart }) => {
+const Home = ({ addToCart, searchQuery }) => {
   const { productItems } = Data
   const [selectedCategory, setSelectedCategory] = useState("all");
+
+  const filteredItems = productItems.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          item.category.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "all" || item.category.toLowerCase() === selectedCategory.toLowerCase();
+    return matchesSearch && matchesCategory;
+  });
   return (
     <>
       <section className='home'>
@@ -25,9 +32,9 @@ const Home = ({ addToCart }) => {
         </div>
       </section>
       <section className='main-content'>
-        <FlashDeals productItems={productItems} addToCart={addToCart} category={selectedCategory} />
-        <NewArrivals addToCart={addToCart} category={selectedCategory} />
-        <Discount addToCart={addToCart} category={selectedCategory} />
+        <FlashDeals productItems={filteredItems} addToCart={addToCart} category="all" />
+        <NewArrivals addToCart={addToCart} category="all" />
+        <Discount addToCart={addToCart} category="all" />
         <Annocument />
         <Wrapper />
       </section>

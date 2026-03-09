@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-const Search = ({ CartItem }) => {
+const Search = ({ CartItem, searchQuery, setSearchQuery }) => {
   // fixed Header
   window.addEventListener("scroll", function () {
     const search = document.querySelector(".search")
@@ -20,12 +20,17 @@ const Search = ({ CartItem }) => {
 
           <div className='search-box f_flex'>
             <i className='fa fa-search'></i>
-            <input type='text' placeholder='Search and hit enter...' className="serchebar" />
+            <input type='text' placeholder='Search and hit enter...' className="serchebar" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
             <span>All Category</span>
           </div>
 
           <div className='icon f_flex width'>
-            <i className='fa fa-user icon-circle'></i>
+            <div className='user'>
+              <Link to='/login'>
+                <i className='fa fa-user icon-circle'></i>
+                <span>Login</span>
+              </Link>
+            </div>
             <div className='cart'>
               <Link to='/cart'>
                 <i className='fa fa-shopping-bag icon-circle'></i>

@@ -17,12 +17,16 @@ import VendorAccount from "./VendorAccount"
 
 import TrackOrder from "./TrackOrder"
 
+import Checkout from "./Checkout"
+
 const Pages = () => {
 
   const [cartItems, setCartItems] = useState(() => {
     const stored = localStorage.getItem("cartItems");
     return stored ? JSON.parse(stored) : [];
   });
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -75,12 +79,12 @@ const Pages = () => {
 
     <>
 
-      <Header CartItem={cartItems} />
+      <Header CartItem={cartItems} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <Switch>
 
         <Route exact path="/">
-          <Home addToCart={addToCart} />
+          <Home addToCart={addToCart} searchQuery={searchQuery} />
         </Route>
 
         <Route path="/cart">
@@ -88,11 +92,7 @@ const Pages = () => {
         </Route>
 
         <Route path="/payment">
-          <div style={{padding:40, textAlign:'center'}}>
-            <h2>Payment Gateway (Demo)</h2>
-            <p>Thank you for your purchase! Your payment was successful.</p>
-            <a href="/">Return to Home</a>
-          </div>
+          <Checkout cartItems={cartItems} clearCart={clearCart} />
         </Route>
 
         <Route path="/user-account" component={UserAccount} />
@@ -101,7 +101,7 @@ const Pages = () => {
 
         <Route path="/track-order" component={TrackOrder} />
 
-        <Route path="/:category" render={() => <Shop addToCart={addToCart} />} />
+        <Route path="/:category" render={() => <Shop addToCart={addToCart} searchQuery={searchQuery} />} />
 
       </Switch>
 

@@ -12,7 +12,11 @@ const Login = () => {
 
     e.preventDefault();
 
+    console.log("Login attempt", email, password);
+
     const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    console.log("Stored user", storedUser);
 
     if (
       storedUser &&
@@ -34,11 +38,11 @@ const Login = () => {
   };
 
   return (
-    <div style={{ padding: "40px" }}>
+    <div style={{ padding: "40px", maxWidth: "400px", margin: "auto" }}>
 
       <h2>Login</h2>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column" }}>
 
         <input
           type="email"
@@ -46,9 +50,8 @@ const Login = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          style={{ marginBottom: "10px", padding: "10px" }}
         />
-
-        <br /><br />
 
         <input
           type="password"
@@ -56,11 +59,10 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          style={{ marginBottom: "10px", padding: "10px" }}
         />
 
-        <br /><br />
-
-        <button type="submit">Login</button>
+        <button type="submit" style={{ padding: "10px", backgroundColor: "#007bff", color: "white", border: "none" }}>Login</button>
 
       </form>
 
