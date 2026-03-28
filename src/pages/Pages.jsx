@@ -17,6 +17,10 @@ import VendorAccount from "./VendorAccount"
 
 import TrackOrder from "./TrackOrder"
 
+import Login from "./Login"
+
+import Register from "./Register"
+
 import Checkout from "./Checkout"
 
 const Pages = () => {
@@ -100,6 +104,10 @@ const Pages = () => {
         <Route path="/vendor-account" component={VendorAccount} />
 
         <Route path="/track-order" component={TrackOrder} />
+
+        <Route path="/login" component={Login} />
+
+        <Route path="/register" component={Register} />
 
         <Route path="/:category" render={() => <Shop addToCart={addToCart} searchQuery={searchQuery} />} />
 
